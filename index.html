@@ -222,6 +222,20 @@
       height: 100%;
       display: block;
       object-fit: contain;
+      clip-path: inset(0 100% 0 0);
+    }
+
+    .world-map-svg.unrolling {
+      animation: mapUnroll 0.85s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    @keyframes mapUnroll {
+      0% {
+        clip-path: inset(0 100% 0 0);
+      }
+      100% {
+        clip-path: inset(0 0% 0 0);
+      }
     }
 
     .map-highlights {
@@ -943,6 +957,7 @@
     const cardBody = document.getElementById('card-body');
     const spotlightContainer = document.getElementById('spotlight-container');
     const spotlightMapBg = document.getElementById('spotlight-map-bg');
+    const mainWorldMap = document.getElementById('main-world-map');
 
     const viewedMap = new Set();
     let activePin = null;
@@ -1047,20 +1062,23 @@
       if (contentModal.classList.contains('active')) alignSpotlightToPin(activePin);
     });
 
-    // 1. CLICK START: HIDE COVER, ANIMATE PINS, SHOW INTRO MODAL
+    // 1. CLICK START: HIDE COVER, UNROLL MAP, ANIMATE PINS, SHOW INTRO MODAL
     document.getElementById('btn-start-cover').addEventListener('click', () => {
       coverView.classList.add('hidden');
+      mainWorldMap.classList.add('unrolling');
       
       const pins = document.querySelectorAll('.pin-btn');
+      const unrollDelay = 750; // Wait until map has unrolled across screen
+
       pins.forEach((pin, index) => {
         setTimeout(() => {
           pin.classList.add('animated');
-        }, index * 120);
+        }, unrollDelay + index * 120);
       });
 
       setTimeout(() => {
         introModal.classList.add('active');
-      }, pins.length * 120 + 300);
+      }, unrollDelay + pins.length * 120 + 300);
     });
 
     // 2. CLICK CONTINUE ON INTRO OVERLAY
@@ -1137,6 +1155,7 @@
 
     document.getElementById('btn-reset').addEventListener('click', () => {
       viewedMap.clear();
+      mainWorldMap.classList.remove('unrolling');
       document.querySelectorAll('.pin-btn').forEach(p => {
         p.classList.remove('viewed');
         p.classList.remove('animated');
