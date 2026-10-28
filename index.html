@@ -352,7 +352,7 @@
     .pin-georgia    { top: 30.1%; left: 59.0%; }
     .pin-syria      { top: 34.7%; left: 58.1%; }
     .pin-yemen      { top: 47.3%; left: 61.1%; }
-    .pin-indiachina { top: 34.7%; left: 70.1%; }
+    .pin-indiachina { top: 34.6%; left: 69.8%; }
     .pin-southchina { top: 47.3%; left: 80.9%; }
 
     /* ========================================================= */
@@ -466,10 +466,20 @@
       filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.4));
     }
 
-    /* India-China spotlight pin aligned to top of red line */
-    .spotlight-view-container.region-indiachina .spotlight-pin-icon {
-      top: 55.6%;
-      left: 52.8%;
+    /* RED LEADER LINE IN SPOTLIGHT VIEW */
+    .spotlight-leader-icon {
+      display: none;
+      position: absolute;
+      top: 53.3%;
+      left: 50.8%;
+      width: 5.6px;
+      height: auto;
+      z-index: 334;
+      pointer-events: none;
+    }
+
+    .spotlight-view-container.region-indiachina .spotlight-leader-icon {
+      display: block !important;
     }
 
     /* DIALOG CARD */
@@ -889,6 +899,7 @@
         <!-- CIRCULAR SPOTLIGHT FRAME -->
         <div class="spotlight-circle-frame" id="spotlight-circle">
           <img src="" id="spotlight-map-bg" alt="Regional Map Spotlight" class="spotlight-map-bg">
+          <img src="Resources/PastedVector-27.svg" id="spotlight-leader" alt="India-China Leader Line" class="spotlight-leader-icon">
           <img src="Resources/PastedVector-25.svg" alt="Location Pin" class="spotlight-pin-icon">
         </div>
 
@@ -1183,7 +1194,7 @@
       introModal.classList.remove('active');
     });
 
-    // 3. MAP PINS CLICK
+    // 3. MAP PINS CLICK: Keep leader line active and spotlight correctly styled
     document.querySelectorAll('.pin-btn').forEach(pin => {
       pin.addEventListener('click', (e) => {
         const id = e.currentTarget.dataset.id;
