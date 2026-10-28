@@ -466,6 +466,19 @@
       filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.4));
     }
 
+    /* RED LEADER LINE IN SPOTLIGHT VIEW */
+    .spotlight-leader-icon {
+      display: none;
+      position: absolute;
+      top: 53.1%;
+      left: 50.8%;
+      transform: translate(-50%, 0);
+      width: 6px;
+      height: auto;
+      z-index: 334;
+      pointer-events: none;
+    }
+
     /* DIALOG CARD */
     .dialog-card {
       background: #ffffff;
@@ -883,6 +896,7 @@
         <!-- CIRCULAR SPOTLIGHT FRAME -->
         <div class="spotlight-circle-frame" id="spotlight-circle">
           <img src="" id="spotlight-map-bg" alt="Regional Map Spotlight" class="spotlight-map-bg">
+          <img src="Resources/PastedVector-27.svg" id="spotlight-leader" alt="" class="spotlight-leader-icon">
           <img src="Resources/PastedVector-25.svg" alt="Location Pin" class="spotlight-pin-icon">
         </div>
 
@@ -1013,6 +1027,7 @@
     const cardBody = document.getElementById('card-body');
     const spotlightContainer = document.getElementById('spotlight-container');
     const spotlightMapBg = document.getElementById('spotlight-map-bg');
+    const spotlightLeader = document.getElementById('spotlight-leader');
     const mainWorldMap = document.getElementById('main-world-map');
 
     const viewedMap = new Set();
@@ -1157,6 +1172,7 @@
         }
       });
 
+      if (spotlightLeader) spotlightLeader.style.display = 'none';
       coverView.classList.remove('hidden');
     }
 
@@ -1177,7 +1193,7 @@
       introModal.classList.remove('active');
     });
 
-    // 3. MAP PINS CLICK
+    // 3. MAP PINS CLICK: Keep leader line active and show it in spotlight if indiachina
     document.querySelectorAll('.pin-btn').forEach(pin => {
       pin.addEventListener('click', (e) => {
         const id = e.currentTarget.dataset.id;
@@ -1190,21 +1206,24 @@
             spotlightMapBg.src = data.mapImg;
           }
 
+          if (spotlightLeader) {
+            spotlightLeader.style.display = (id === 'indiachina') ? 'block' : 'none';
+          }
+
           spotlightContainer.className = "spotlight-view-container " + (data.layoutClass || "");
 
           activePin = e.currentTarget;
           alignSpotlightToPin(activePin);
           contentModal.classList.add('active');
-          e.currentTarget.classList.add('viewed');
-          viewedMap.add(id);
         }
       });
     });
 
-    // 4. CLOSE DIALOG
+    // 4. CLOSE DIALOG: Swivel pin, mark viewed, and turn off highlights
     document.getElementById('close-dialog-btn').addEventListener('click', () => {
       if (activePin) {
         const pinBtn = activePin;
+        const id = pinBtn.dataset.id;
         const pinImg = pinBtn.querySelector('.pin-img');
         
         pinBtn.classList.add('swiveling');
@@ -1217,6 +1236,19 @@
 
         setTimeout(() => {
           pinBtn.classList.remove('swiveling');
+          pinBtn.classList.add('viewed');
+          viewedMap.add(id);
+
+          const hlEl = document.getElementById('hl-' + id);
+          if (hlEl) hlEl.classList.remove('active');
+          if (id === 'indiachina') {
+            const icLeader = document.getElementById('leader-indiachina');
+            if (icLeader) icLeader.classList.remove('active');
+          }
+
+          if (viewedMap.size === 7) {
+            setTimeout(() => completionModal.classList.add('active'), 300);
+          }
         }, 600);
       }
 
@@ -1224,11 +1256,8 @@
       
       setTimeout(() => {
         spotlightMapBg.src = '';
+        if (spotlightLeader) spotlightLeader.style.display = 'none';
       }, 300);
-
-      if (viewedMap.size === 7) {
-        setTimeout(() => completionModal.classList.add('active'), 600);
-      }
     });
 
     // 5. HEADER & COMPLETION CONTROLS
@@ -1262,6 +1291,7 @@
         }
       });
 
+      if (spotlightLeader) spotlightLeader.style.display = 'none';
       runUnrollAnimation();
 
       const pins = document.querySelectorAll('.pin-btn');
@@ -1301,7 +1331,6 @@
         pin.addEventListener('focus', on);
         pin.addEventListener('mouseleave', off);
         pin.addEventListener('blur', off);
-        pin.addEventListener('click', off);
       });
 
       document.getElementById('btn-reset').addEventListener('click', () => {
