@@ -64,12 +64,10 @@
       justify-content: space-between;
       padding: 4rem 6rem;
       z-index: 500;
-      transition: opacity 0.4s ease, visibility 0.4s ease;
     }
 
     .view-cover.hidden {
-      opacity: 0;
-      visibility: hidden;
+      display: none !important;
       pointer-events: none;
     }
 
@@ -226,7 +224,7 @@
     }
 
     .world-map-svg.unrolling {
-      animation: mapUnroll 0.85s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      animation: mapUnroll 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
 
     @keyframes mapUnroll {
@@ -1068,7 +1066,7 @@
       mainWorldMap.classList.add('unrolling');
       
       const pins = document.querySelectorAll('.pin-btn');
-      const unrollDelay = 750; // Wait until map has unrolled across screen
+      const unrollDelay = 850; // Wait until map has unrolled across screen
 
       pins.forEach((pin, index) => {
         setTimeout(() => {
