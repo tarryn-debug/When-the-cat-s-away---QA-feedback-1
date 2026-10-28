@@ -281,7 +281,7 @@
       opacity: 0.2;
     }
 
-    /* RED LEADER LINE (PastedVector-27) */
+    /* RED LEADER LINE ON WORLD MAP */
     .map-leader {
       opacity: 0;
       transition: opacity 0.2s ease;
@@ -445,6 +445,18 @@
       background-color: #ffffff;
     }
 
+    .spotlight-map-viewport {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .spotlight-view-container.layout-left.zoom-map .spotlight-circle-frame .spotlight-map-viewport {
+      transform: scale(1.17);
+      transform-origin: 50.7% 51.7%;
+    }
+
     .spotlight-circle-frame img.spotlight-map-bg {
       position: absolute;
       width: 106.65%;
@@ -453,6 +465,22 @@
       top: -0.14%;
       max-width: none;
       display: block;
+    }
+
+    /* LEADER LINE INSIDE THE SCALED SPOTLIGHT VIEWPORT */
+    .spotlight-leader-img {
+      display: none;
+      position: absolute;
+      left: 50.4%;
+      top: 53.6%;
+      width: 4.8px;
+      height: auto;
+      pointer-events: none;
+      z-index: 332;
+    }
+
+    .spotlight-view-container.region-indiachina .spotlight-leader-img {
+      display: block !important;
     }
 
     .spotlight-pin-icon {
@@ -584,11 +612,6 @@
       left: var(--cx, 56%);
       top: var(--cy, 36%);
       transition: none !important;
-    }
-
-    .spotlight-view-container.layout-left.zoom-map .spotlight-circle-frame img.spotlight-map-bg {
-      transform: scale(1.17);
-      transform-origin: 50.7% 51.7%;
     }
 
     /* CENTER MODAL */
@@ -882,7 +905,10 @@
         
         <!-- CIRCULAR SPOTLIGHT FRAME -->
         <div class="spotlight-circle-frame" id="spotlight-circle">
-          <img src="" id="spotlight-map-bg" alt="Regional Map Spotlight" class="spotlight-map-bg">
+          <div class="spotlight-map-viewport">
+            <img src="" id="spotlight-map-bg" alt="Regional Map Spotlight" class="spotlight-map-bg">
+            <img src="Resources/PastedVector-27.svg" id="spotlight-leader" alt="" class="spotlight-leader-img">
+          </div>
           <img src="Resources/PastedVector-25.svg" alt="Location Pin" class="spotlight-pin-icon">
         </div>
 
@@ -986,7 +1012,7 @@
         title: "India-China conflict",
         body: "Tensions have been high between these two countries over the contours of their borders for almost half a century. With China’s growing brazenness, things escalated in 2020 when the Indian and Chinese armies clashed at the Galwan Valley, resulting in the brutal killing of 20 Indian soldiers. China claimed that the clash was a reaction to Indian forces carrying out illegal activities.",
         mapImg: "Resources/PastedVector-33.svg",
-        layoutClass: "layout-left zoom-map card-wide"
+        layoutClass: "layout-left zoom-map card-wide region-indiachina"
       },
       southchina: {
         title: "Islands in the South China Sea",
