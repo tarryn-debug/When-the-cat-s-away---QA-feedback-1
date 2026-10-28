@@ -466,20 +466,10 @@
       filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.4));
     }
 
-    /* RED LEADER LINE IN SPOTLIGHT VIEW */
-    .spotlight-leader-icon {
-      display: none;
-      position: absolute;
-      top: 53.3%;
-      left: 50.8%;
-      width: 5.6px;
-      height: auto;
-      z-index: 334;
-      pointer-events: none;
-    }
-
-    .spotlight-view-container.region-indiachina .spotlight-leader-icon {
-      display: block !important;
+    /* India-China spotlight pin aligned directly to top of red line */
+    .spotlight-view-container.region-indiachina .spotlight-pin-icon {
+      top: 42.8%;
+      left: 54.3%;
     }
 
     /* DIALOG CARD */
@@ -899,7 +889,6 @@
         <!-- CIRCULAR SPOTLIGHT FRAME -->
         <div class="spotlight-circle-frame" id="spotlight-circle">
           <img src="" id="spotlight-map-bg" alt="Regional Map Spotlight" class="spotlight-map-bg">
-          <img src="Resources/PastedVector-27.svg" id="spotlight-leader" alt="India-China Leader Line" class="spotlight-leader-icon">
           <img src="Resources/PastedVector-25.svg" alt="Location Pin" class="spotlight-pin-icon">
         </div>
 
