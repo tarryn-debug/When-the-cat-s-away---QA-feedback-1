@@ -466,12 +466,6 @@
       filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.4));
     }
 
-    /* India-China spotlight pin aligned directly to top of red line */
-    .spotlight-view-container.region-indiachina .spotlight-pin-icon {
-      top: 42.8%;
-      left: 54.3%;
-    }
-
     /* DIALOG CARD */
     .dialog-card {
       background: #ffffff;
@@ -992,7 +986,7 @@
         title: "India-China conflict",
         body: "Tensions have been high between these two countries over the contours of their borders for almost half a century. With China’s growing brazenness, things escalated in 2020 when the Indian and Chinese armies clashed at the Galwan Valley, resulting in the brutal killing of 20 Indian soldiers. China claimed that the clash was a reaction to Indian forces carrying out illegal activities.",
         mapImg: "Resources/PastedVector-33.svg",
-        layoutClass: "layout-left zoom-map card-wide region-indiachina"
+        layoutClass: "layout-left zoom-map card-wide"
       },
       southchina: {
         title: "Islands in the South China Sea",
@@ -1272,56 +1266,4 @@
         p.classList.remove('swiveling');
         const pinImg = p.querySelector('.pin-img');
         if (pinImg) {
-          pinImg.src = 'Resources/PastedVector-25.svg';
-        }
-      });
-
-      runUnrollAnimation();
-
-      const pins = document.querySelectorAll('.pin-btn');
-      const unrollDelay = 1400;
-      setTimeout(() => {
-        introModal.classList.add('active');
-      }, unrollDelay + pins.length * 120 + 300);
-    });
-
-    // EXIT BUTTONS CLICK: Return to the cover home screen
-    document.getElementById('btn-exit').addEventListener('click', returnToHomeScreen);
-    document.getElementById('completion-exit-btn').addEventListener('click', returnToHomeScreen);
-
-    // 6. HOVER HIGHLIGHTS & LEADER LINE
-    (function () {
-      const hl = id => document.getElementById('hl-' + id);
-      const icLeader = document.getElementById('leader-indiachina');
-
-      document.querySelectorAll('.pin-btn').forEach(pin => {
-        const id = pin.dataset.id;
-        const on = () => { 
-          if (!pin.classList.contains('viewed')) {
-            hl(id).classList.add('active');
-            if (id === 'indiachina' && icLeader) {
-              icLeader.classList.add('active');
-            }
-          }
-        };
-        const off = () => { 
-          hl(id).classList.remove('active');
-          if (id === 'indiachina' && icLeader) {
-            icLeader.classList.remove('active');
-          }
-        };
-
-        pin.addEventListener('mouseenter', on);
-        pin.addEventListener('focus', on);
-        pin.addEventListener('mouseleave', off);
-        pin.addEventListener('blur', off);
-      });
-
-      document.getElementById('btn-reset').addEventListener('click', () => {
-        document.querySelectorAll('.map-hl').forEach(el => el.classList.remove('active'));
-        if (icLeader) icLeader.classList.remove('active');
-      });
-    })();
-  </script>
-</body>
-</html>
+          pin
