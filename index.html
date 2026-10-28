@@ -1105,12 +1105,17 @@
       if (contentModal.classList.contains('active')) alignSpotlightToPin(activePin);
     });
 
-    // 1. CLICK START: HIDE COVER, UNROLL MAP, ANIMATE PINS, SHOW INTRO MODAL
-    document.getElementById('btn-start-cover').addEventListener('click', () => {
-      coverView.classList.add('hidden');
+    // Sequence to trigger map unroll and sequential pin pop-in
+    function runUnrollAnimation() {
+      mainWorldMap.classList.remove('unrolling');
+      void mainWorldMap.offsetWidth; // Force DOM reflow to restart CSS animation cleanly
       mainWorldMap.classList.add('unrolling');
-      
+
       const pins = document.querySelectorAll('.pin-btn');
+      pins.forEach(p => {
+        p.classList.remove('animated');
+      });
+
       const unrollDelay = 1400; // Wait until map has fully unrolled across screen
 
       pins.forEach((pin, index) => {
@@ -1118,7 +1123,15 @@
           pin.classList.add('animated');
         }, unrollDelay + index * 120);
       });
+    }
 
+    // 1. CLICK START: HIDE COVER, UNROLL MAP, ANIMATE PINS, SHOW INTRO MODAL
+    document.getElementById('btn-start-cover').addEventListener('click', () => {
+      coverView.classList.add('hidden');
+      runUnrollAnimation();
+
+      const pins = document.querySelectorAll('.pin-btn');
+      const unrollDelay = 1400;
       setTimeout(() => {
         introModal.classList.add('active');
       }, unrollDelay + pins.length * 120 + 300);
@@ -1196,9 +1209,14 @@
       biblioOverlay.classList.add('active');
     });
 
+    // HOME BUTTON CLICK: Reset map, unroll from the beginning, and show intro modal
     document.getElementById('btn-reset').addEventListener('click', () => {
+      contentModal.classList.remove('active');
+      completionModal.classList.remove('active');
+      biblioOverlay.classList.remove('active');
+      introModal.classList.remove('active');
+
       viewedMap.clear();
-      mainWorldMap.classList.remove('unrolling');
       document.querySelectorAll('.pin-btn').forEach(p => {
         p.classList.remove('viewed');
         p.classList.remove('animated');
@@ -1208,8 +1226,14 @@
           pinImg.src = 'Resources/PastedVector-25.svg';
         }
       });
-      completionModal.classList.remove('active');
-      coverView.classList.remove('hidden');
+
+      runUnrollAnimation();
+
+      const pins = document.querySelectorAll('.pin-btn');
+      const unrollDelay = 1400;
+      setTimeout(() => {
+        introModal.classList.add('active');
+      }, unrollDelay + pins.length * 120 + 300);
     });
 
     document.getElementById('btn-exit').addEventListener('click', () => {
