@@ -1266,4 +1266,56 @@
         p.classList.remove('swiveling');
         const pinImg = p.querySelector('.pin-img');
         if (pinImg) {
-          pin
+          pinImg.src = 'Resources/PastedVector-25.svg';
+        }
+      });
+
+      runUnrollAnimation();
+
+      const pins = document.querySelectorAll('.pin-btn');
+      const unrollDelay = 1400;
+      setTimeout(() => {
+        introModal.classList.add('active');
+      }, unrollDelay + pins.length * 120 + 300);
+    });
+
+    // EXIT BUTTONS CLICK: Return to the cover home screen
+    document.getElementById('btn-exit').addEventListener('click', returnToHomeScreen);
+    document.getElementById('completion-exit-btn').addEventListener('click', returnToHomeScreen);
+
+    // 6. HOVER HIGHLIGHTS & LEADER LINE
+    (function () {
+      const hl = id => document.getElementById('hl-' + id);
+      const icLeader = document.getElementById('leader-indiachina');
+
+      document.querySelectorAll('.pin-btn').forEach(pin => {
+        const id = pin.dataset.id;
+        const on = () => { 
+          if (!pin.classList.contains('viewed')) {
+            hl(id).classList.add('active');
+            if (id === 'indiachina' && icLeader) {
+              icLeader.classList.add('active');
+            }
+          }
+        };
+        const off = () => { 
+          hl(id).classList.remove('active');
+          if (id === 'indiachina' && icLeader) {
+            icLeader.classList.remove('active');
+          }
+        };
+
+        pin.addEventListener('mouseenter', on);
+        pin.addEventListener('focus', on);
+        pin.addEventListener('mouseleave', off);
+        pin.addEventListener('blur', off);
+      });
+
+      document.getElementById('btn-reset').addEventListener('click', () => {
+        document.querySelectorAll('.map-hl').forEach(el => el.classList.remove('active'));
+        if (icLeader) icLeader.classList.remove('active');
+      });
+    })();
+  </script>
+</body>
+</html>
