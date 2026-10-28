@@ -1125,6 +1125,28 @@
       });
     }
 
+    // Helper: Return to home/cover screen
+    function returnToHomeScreen() {
+      contentModal.classList.remove('active');
+      completionModal.classList.remove('active');
+      biblioOverlay.classList.remove('active');
+      introModal.classList.remove('active');
+
+      viewedMap.clear();
+      mainWorldMap.classList.remove('unrolling');
+      document.querySelectorAll('.pin-btn').forEach(p => {
+        p.classList.remove('viewed');
+        p.classList.remove('animated');
+        p.classList.remove('swiveling');
+        const pinImg = p.querySelector('.pin-img');
+        if (pinImg) {
+          pinImg.src = 'Resources/PastedVector-25.svg';
+        }
+      });
+
+      coverView.classList.remove('hidden');
+    }
+
     // 1. CLICK START: HIDE COVER, UNROLL MAP, ANIMATE PINS, SHOW INTRO MODAL
     document.getElementById('btn-start-cover').addEventListener('click', () => {
       coverView.classList.add('hidden');
@@ -1236,11 +1258,9 @@
       }, unrollDelay + pins.length * 120 + 300);
     });
 
-    document.getElementById('btn-exit').addEventListener('click', () => {
-      if (confirm('You are about to close this tab. Do you want to continue?')) {
-        window.close();
-      }
-    });
+    // EXIT BUTTONS CLICK: Return to the cover home screen
+    document.getElementById('btn-exit').addEventListener('click', returnToHomeScreen);
+    document.getElementById('completion-exit-btn').addEventListener('click', returnToHomeScreen);
 
     // 6. HOVER HIGHLIGHTS & LEADER LINE
     (function () {
