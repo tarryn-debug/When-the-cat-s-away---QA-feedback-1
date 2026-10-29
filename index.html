@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>When the cat's away</title>
   
-  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 
   <style>
@@ -20,6 +20,9 @@
       --color-bg-light: #EBEDFA;
       --color-text-dark: #111111;
       --font-main: 'Noto Sans', sans-serif;
+
+      --mb-shadow-offset-sm: 0 4px 8px 0 rgba(13, 13, 13, 0.15);
+      --mb-shadow-frame: var(--mb-shadow-offset-sm), 0 0 6px 0 rgba(13, 13, 13, 0.10);
     }
 
     *, *::before, *::after {
@@ -28,6 +31,7 @@
       padding: 0;
     }
 
+    /* ── Whole-interaction frame: brand Offset shadow (Small), 8px radius ─── */
     body {
       font-family: var(--font-main);
       background-color: #ffffff;
@@ -36,7 +40,9 @@
       align-items: center;
       min-height: 100vh;
       padding: 1.5rem;
-      margin: 0;
+      margin: 8px !important;
+      border-radius: 8px;
+      box-shadow: var(--mb-shadow-frame);
     }
 
     /* CONTAINER */
@@ -45,8 +51,8 @@
       max-width: 1120px;
       aspect-ratio: 16 / 9;
       background: #ffffff;
-      border-radius: 0;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+      border-radius: 8px;
+      box-shadow: var(--mb-shadow-frame);
       position: relative;
       overflow: hidden;
       transform: translateZ(0);
@@ -64,17 +70,15 @@
       justify-content: space-between;
       padding: 4rem 6rem;
       z-index: 500;
-      transition: opacity 0.4s ease, visibility 0.4s ease;
     }
 
     .view-cover.hidden {
-      opacity: 0;
-      visibility: hidden;
+      display: none !important;
       pointer-events: none;
     }
 
     .cover-content {
-      max-width: 460px;
+      max-width: 540px;
       display: flex;
       flex-direction: column;
       gap: 2rem;
@@ -82,37 +86,49 @@
     }
 
     .cover-title {
-      font-size: 48px;
+      font-size: 44px;
       font-weight: 700;
       color: #000000;
-      line-height: 1.25;
+      line-height: 1.2;
+      white-space: nowrap;
       opacity: 0;
-      transform: translateY(24px);
-      animation: slideUpFade 1.6s cubic-bezier(0.25, 1, 0.4, 1) forwards;
-      animation-delay: 0.2s;
+      transform: translateY(40px);
+      animation: titleSlideUpFade 1.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: 0.1s;
     }
 
     .btn-start {
       align-self: flex-start;
       background-color: #2E45B8;
       color: #ffffff;
-      border: none;
-      padding: 0.75rem 2.5rem;
+      border: 1.5px solid #2E45B8;
+      padding: 0.75rem 3.25rem;
+      min-width: 148px;
+      text-align: center;
       font-size: 1rem;
       font-family: var(--font-main);
       font-weight: 700;
       border-radius: 4px;
       cursor: pointer;
       box-shadow: 0 2px 6px rgba(46, 69, 184, 0.25);
-      transition: background-color 0.2s ease, transform 0.15s ease;
+      transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
       opacity: 0;
-      animation: fadeIn 0.8s ease-out forwards;
-      animation-delay: 1s;
+      animation: buttonFadeIn 0.8s ease-out forwards;
+      animation-delay: 1.0s;
     }
 
     .btn-start:hover {
-      background-color: #141F52;
+      background-color: #1F2E7A;
+      border-color: #1F2E7A;
+      color: #ffffff;
       transform: translateY(-1px);
+    }
+
+    .btn-start:active {
+      background-color: #1F2E7A;
+      border-color: #1DC9A4;
+      color: #ffffff;
+      transform: translateY(0);
     }
 
     .btn-start:focus-visible {
@@ -134,14 +150,24 @@
       display: block;
     }
 
-    @keyframes slideUpFade {
-      from { opacity: 0; transform: translateY(24px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes titleSlideUpFade {
+      0% {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    @keyframes buttonFadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
     }
 
     /* ========================================================= */
@@ -177,8 +203,8 @@
 
     .icon-btn {
       background: #ffffff;
-      border: 1.5px solid var(--color-navy-header);
-      color: var(--color-navy-header);
+      border: 1.5px solid #1F2E7A;
+      color: #1F2E7A;
       border-radius: 50%;
       width: 32px;
       height: 32px;
@@ -187,12 +213,20 @@
       justify-content: center;
       cursor: pointer;
       transition: all 0.2s ease;
+      outline: none;
     }
 
     .icon-btn:hover, .icon-btn:focus-visible {
-      background: var(--color-bg-light);
-      border-color: var(--color-teal);
-      outline: 2px solid var(--color-teal);
+      background-color: #EBEDFA;
+      border-color: #1F2E7A;
+      color: #1F2E7A;
+      outline: none;
+    }
+
+    .icon-btn:active {
+      background-color: transparent;
+      border-color: #1DC9A4;
+      color: #1F2E7A;
     }
 
     .stage-view {
@@ -209,6 +243,20 @@
       height: 100%;
       display: block;
       object-fit: contain;
+      clip-path: inset(0 100% 0 0);
+    }
+
+    .world-map-svg.unrolling {
+      animation: mapUnroll 1.4s cubic-bezier(0.3, 0.05, 0.25, 1) forwards;
+    }
+
+    @keyframes mapUnroll {
+      0% {
+        clip-path: inset(0 100% 0 0);
+      }
+      100% {
+        clip-path: inset(0 0% 0 0);
+      }
     }
 
     .map-highlights {
@@ -233,7 +281,7 @@
       opacity: 0.2;
     }
 
-    /* RED LEADER LINE (PastedVector-27) */
+    /* RED LEADER LINE ON WORLD MAP */
     .map-leader {
       opacity: 0;
       transition: opacity 0.2s ease;
@@ -304,7 +352,7 @@
     .pin-georgia    { top: 30.1%; left: 59.0%; }
     .pin-syria      { top: 34.7%; left: 58.1%; }
     .pin-yemen      { top: 47.3%; left: 61.1%; }
-    .pin-indiachina { top: 34.1%; left: 69.8%; }
+    .pin-indiachina { top: 34.6%; left: 69.8%; }
     .pin-southchina { top: 47.3%; left: 80.9%; }
 
     /* ========================================================= */
@@ -397,6 +445,18 @@
       background-color: #ffffff;
     }
 
+    .spotlight-map-viewport {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .spotlight-view-container.layout-left.zoom-map .spotlight-circle-frame .spotlight-map-viewport {
+      transform: scale(1.17);
+      transform-origin: 50.7% 51.7%;
+    }
+
     .spotlight-circle-frame img.spotlight-map-bg {
       position: absolute;
       width: 106.65%;
@@ -405,6 +465,23 @@
       top: -0.14%;
       max-width: none;
       display: block;
+    }
+
+    /* LEADER LINE LOCKED DIRECTLY TO PIN TIP */
+    .spotlight-leader-img {
+      display: none;
+      position: absolute;
+      left: 50.8%;
+      top: 52.7%;
+      width: 5.2px;
+      height: auto;
+      pointer-events: none;
+      z-index: 332;
+      transform: translate(-50%, 0);
+    }
+
+    .spotlight-view-container.region-indiachina .spotlight-leader-img {
+      display: block !important;
     }
 
     .spotlight-pin-icon {
@@ -416,6 +493,11 @@
       height: auto;
       z-index: 335;
       filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.4));
+    }
+
+    /* India-China spotlight pin shifted slightly right to align with the red leader line */
+    .spotlight-view-container.region-indiachina .spotlight-pin-icon {
+      left: 52.4%;
     }
 
     /* DIALOG CARD */
@@ -445,12 +527,14 @@
       line-height: 1.65;
     }
 
+    /* CLOSE BUTTONS ON DIALOGS AND MODALS MATCHING HEADER EXIT BUTTON EXACTLY */
     .close-card-btn {
       position: absolute;
       top: 1.25rem;
       right: 1.25rem;
       background: #ffffff;
-      border: 1.5px solid var(--color-primary-blue);
+      border: 1.5px solid #1F2E7A;
+      color: #1F2E7A;
       border-radius: 50%;
       width: 32px;
       height: 32px;
@@ -458,13 +542,22 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 1.1rem;
-      color: var(--color-primary-blue);
       transition: all 0.2s ease;
+      outline: none;
+      padding: 0;
     }
 
-    .close-card-btn:hover {
-      background: var(--color-bg-light);
+    .close-card-btn:hover, .close-card-btn:focus-visible {
+      background-color: #EBEDFA;
+      border-color: #1F2E7A;
+      color: #1F2E7A;
+      outline: none;
+    }
+
+    .close-card-btn:active {
+      background-color: transparent;
+      border-color: #1DC9A4;
+      color: #1F2E7A;
     }
 
     /* ========================================================= */
@@ -527,18 +620,13 @@
       transition: none !important;
     }
 
-    .spotlight-view-container.layout-left.zoom-map .spotlight-circle-frame img.spotlight-map-bg {
-      transform: scale(1.17);
-      transform-origin: 50.7% 51.7%;
-    }
-
     /* CENTER MODAL */
     .center-modal {
       background: #ffffff;
       border-radius: 0;
-      padding: 3.25rem 2.5rem 2.25rem;
+      padding: 3.25rem 3.5rem 2.25rem;
       text-align: center;
-      max-width: 520px;
+      max-width: 820px;
       box-shadow: 0 12px 32px rgba(0,0,0,0.4);
       position: relative;
       margin-top: 2rem;
@@ -567,20 +655,29 @@
     }
 
     .action-btn {
-      background: #2E45B8;
+      background-color: #2E45B8;
       color: #ffffff;
-      border: none;
+      border: 1.5px solid #2E45B8;
       padding: 0.65rem 2.5rem;
       border-radius: 4px;
       font-size: 0.95rem;
       font-weight: 700;
       cursor: pointer;
-      transition: background-color 0.2s ease, transform 0.15s ease;
+      transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
     }
 
     .action-btn:hover {
-      background: #141F52;
+      background-color: #1F2E7A;
+      border-color: #1F2E7A;
+      color: #ffffff;
       transform: translateY(-1px);
+    }
+
+    .action-btn:active {
+      background-color: #1F2E7A;
+      border-color: #1DC9A4;
+      color: #ffffff;
+      transform: translateY(0);
     }
 
     /* COMPLETION MODAL CUSTOM STYLES */
@@ -606,18 +703,27 @@
     }
 
     .btn-outline {
-      background: #ffffff !important;
-      color: var(--color-primary-blue) !important;
-      border: 1.5px solid var(--color-primary-blue) !important;
+      background-color: #ffffff !important;
+      color: #1F2E7A !important;
+      border: 1.5px solid #1F2E7A !important;
     }
 
     .btn-outline:hover {
-      background: var(--color-bg-light) !important;
-      color: var(--color-navy-dark) !important;
+      background-color: #EBEDFA !important;
+      border-color: #1F2E7A !important;
+      color: #1F2E7A !important;
+      transform: translateY(-1px);
+    }
+
+    .btn-outline:active {
+      background-color: transparent !important;
+      border-color: #1DC9A4 !important;
+      color: #1F2E7A !important;
+      transform: translateY(0);
     }
 
     /* ========================================================= */
-    /* BIBLIOGRAPHY MODAL (PROPORTIONAL MARGINS & SPREAD)        */
+    /* BIBLIOGRAPHY MODAL                                        */
     /* ========================================================= */
     .biblio-overlay {
       position: absolute;
@@ -686,8 +792,8 @@
       .interactive-container { aspect-ratio: auto; min-height: 540px; }
       .view-cover { flex-direction: column-reverse; padding: 2.5rem 1.5rem 1.5rem; gap: 1.5rem; justify-content: center; }
       .cover-content { align-items: center; text-align: center; }
-      .cover-title { font-size: 32px; }
-      .btn-start { align-self: center; width: 100%; max-width: 200px; }
+      .cover-title { font-size: 32px; white-space: normal; }
+      .btn-start { align-self: center; width: 100%; max-width: 200px; min-width: 0; }
       .cover-illustration { width: 60%; }
       .dialog-card { width: 95%; padding: 1.25rem; }
       .spotlight-circle-frame { width: 90px; height: 90px; }
@@ -703,7 +809,7 @@
 
   <div class="interactive-container" id="interactive-app">
 
-    <!-- COVER SLIDE (IMAGE 1: PastedVector-39) -->
+    <!-- COVER SLIDE -->
     <section class="view-cover" id="cover-view">
       <div class="cover-content">
         <h1 class="cover-title">When the cat's away</h1>
@@ -805,7 +911,10 @@
         
         <!-- CIRCULAR SPOTLIGHT FRAME -->
         <div class="spotlight-circle-frame" id="spotlight-circle">
-          <img src="" id="spotlight-map-bg" alt="Regional Map Spotlight" class="spotlight-map-bg">
+          <div class="spotlight-map-viewport">
+            <img src="" id="spotlight-map-bg" alt="Regional Map Spotlight" class="spotlight-map-bg">
+            <img src="Resources/PastedVector-27.svg" id="spotlight-leader" alt="" class="spotlight-leader-img">
+          </div>
           <img src="Resources/PastedVector-25.svg" alt="Location Pin" class="spotlight-pin-icon">
         </div>
 
@@ -824,7 +933,9 @@
 
           <!-- DIALOG CARD -->
           <div class="dialog-card">
-            <button class="close-card-btn" id="close-dialog-btn" aria-label="Close dialog">&times;</button>
+            <button class="close-card-btn" id="close-dialog-btn" aria-label="Close dialog">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
             <h2 id="card-title">The invasion of Crimea and eastern Ukraine</h2>
             <p id="card-body">In 2013, Ukraine’s pro-Russian government suspended the signing of an association agreement with the European Union, sparking mass protests by the pro-European Maidan movement, the Ukrainian revolution and the overthrow of Ukraine’s pro-Russian government. In 2014, Russia took advantage of the internal conflict to impose itself in this part of the former Soviet Union, calculating that the US would not be able to deter it. First, it annexed Crimea, a peninsula in the Black Sea. Protestors in Crimea, backed by disguised Russian soldiers, rejected the new Ukrainian government, seized the local parliament building and organised a referendum, in which, Russia claimed, Crimeans voted overwhelmingly to join Russia. Soon after pro-Russian rebels seized territory in eastern Ukraine with the help of the Russian army, which led to brutal fighting and a humanitarian crisis.</p>
           </div>
@@ -835,7 +946,9 @@
     <!-- COMPLETION OVERLAY MODAL -->
     <div class="dark-overlay" id="completion-modal">
       <div class="center-modal completion-card">
-        <button class="close-card-btn" id="close-completion-btn" aria-label="Close dialog">&times;</button>
+        <button class="close-card-btn" id="close-completion-btn" aria-label="Close dialog">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
         <img src="Resources/PastedVector-6.svg" alt="Collar with US Flag buckle and cheese" class="completion-illustration">
         <h2>You have completed this interactive infographic.<br>What would you like to do next?</h2>
         <div class="completion-buttons">
@@ -848,7 +961,9 @@
     <!-- BIBLIOGRAPHY OVERLAY -->
     <div class="biblio-overlay" id="biblio-overlay">
       <div class="biblio-card">
-        <button class="close-card-btn" id="close-biblio-btn" aria-label="Close Bibliography">&times;</button>
+        <button class="close-card-btn" id="close-biblio-btn" aria-label="Close Bibliography">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
         <h2>Bibliography</h2>
         <div class="biblio-list">
           <p>Council on Foreign Relations. n.d. <i>Conflict in Ukraine.</i> Available: https://www.cfr.org/global-conflict-tracker/conflict/conflict-ukraine [2021, February 23].</p>
@@ -903,7 +1018,7 @@
         title: "India-China conflict",
         body: "Tensions have been high between these two countries over the contours of their borders for almost half a century. With China’s growing brazenness, things escalated in 2020 when the Indian and Chinese armies clashed at the Galwan Valley, resulting in the brutal killing of 20 Indian soldiers. China claimed that the clash was a reaction to Indian forces carrying out illegal activities.",
         mapImg: "Resources/PastedVector-33.svg",
-        layoutClass: "layout-left zoom-map card-wide"
+        layoutClass: "layout-left zoom-map card-wide region-indiachina"
       },
       southchina: {
         title: "Islands in the South China Sea",
@@ -930,6 +1045,7 @@
     const cardBody = document.getElementById('card-body');
     const spotlightContainer = document.getElementById('spotlight-container');
     const spotlightMapBg = document.getElementById('spotlight-map-bg');
+    const mainWorldMap = document.getElementById('main-world-map');
 
     const viewedMap = new Set();
     let activePin = null;
@@ -986,15 +1102,12 @@
       if (cardAboveCircle) {
         p1 = [card.offsetLeft + card.offsetWidth, card.offsetTop];
         if (spotlightContainer.classList.contains('wedge-outer')) {
-          // Yemen: wedge wraps the circle, touching its outer (right-hand) tangent
           t1 = tangentPoints(p1[0], p1[1], cx, cy, r).sort((a, b) => b[0] - a[0])[0];
         } else {
-          // Syria: wedge runs into the near side of the circle
           const vx = cx - p1[0], vy = cy - p1[1], vd = Math.hypot(vx, vy);
           t1 = [cx - vx / vd * r, cy - vy / vd * r];
         }
       } else {
-        // Turkey, Georgia, India-China: wedge leaves the card's top-left corner and touches the circle's upper tangent
         p1 = [card.offsetLeft, card.offsetTop];
         t1 = tangentPoints(p1[0], p1[1], cx, cy, r).sort((a, b) => a[1] - b[1])[0];
       }
@@ -1021,7 +1134,6 @@
       card.style.bottom = '';
       stack.style.transform = '';
 
-      // Direct coordinates relative to the interactive container
       const gap = pin.offsetHeight - pinImg.offsetHeight;
       const tipX = stage.offsetLeft + pin.offsetLeft;
       const tipY = stage.offsetTop + pin.offsetTop - gap;
@@ -1038,20 +1150,58 @@
       if (contentModal.classList.contains('active')) alignSpotlightToPin(activePin);
     });
 
-    // 1. CLICK START: HIDE COVER, ANIMATE PINS, SHOW INTRO MODAL
-    document.getElementById('btn-start-cover').addEventListener('click', () => {
-      coverView.classList.add('hidden');
-      
+    // Sequence to trigger map unroll and sequential pin pop-in
+    function runUnrollAnimation() {
+      mainWorldMap.classList.remove('unrolling');
+      void mainWorldMap.offsetWidth; // Force DOM reflow to restart CSS animation cleanly
+      mainWorldMap.classList.add('unrolling');
+
       const pins = document.querySelectorAll('.pin-btn');
+      pins.forEach(p => {
+        p.classList.remove('animated');
+      });
+
+      const unrollDelay = 1400; // Wait until map has fully unrolled across screen
+
       pins.forEach((pin, index) => {
         setTimeout(() => {
           pin.classList.add('animated');
-        }, index * 120);
+        }, unrollDelay + index * 120);
+      });
+    }
+
+    // Helper: Return to home/cover screen
+    function returnToHomeScreen() {
+      contentModal.classList.remove('active');
+      completionModal.classList.remove('active');
+      biblioOverlay.classList.remove('active');
+      introModal.classList.remove('active');
+
+      viewedMap.clear();
+      mainWorldMap.classList.remove('unrolling');
+      document.querySelectorAll('.pin-btn').forEach(p => {
+        p.classList.remove('viewed');
+        p.classList.remove('animated');
+        p.classList.remove('swiveling');
+        const pinImg = p.querySelector('.pin-img');
+        if (pinImg) {
+          pinImg.src = 'Resources/PastedVector-25.svg';
+        }
       });
 
+      coverView.classList.remove('hidden');
+    }
+
+    // 1. CLICK START: HIDE COVER, UNROLL MAP, ANIMATE PINS, SHOW INTRO MODAL
+    document.getElementById('btn-start-cover').addEventListener('click', () => {
+      coverView.classList.add('hidden');
+      runUnrollAnimation();
+
+      const pins = document.querySelectorAll('.pin-btn');
+      const unrollDelay = 1400;
       setTimeout(() => {
         introModal.classList.add('active');
-      }, pins.length * 120 + 300);
+      }, unrollDelay + pins.length * 120 + 300);
     });
 
     // 2. CLICK CONTINUE ON INTRO OVERLAY
@@ -1059,7 +1209,7 @@
       introModal.classList.remove('active');
     });
 
-    // 3. MAP PINS CLICK: Swap data and update image before opening modal
+    // 3. MAP PINS CLICK: Keep leader line active and spotlight correctly styled
     document.querySelectorAll('.pin-btn').forEach(pin => {
       pin.addEventListener('click', (e) => {
         const id = e.currentTarget.dataset.id;
@@ -1077,16 +1227,15 @@
           activePin = e.currentTarget;
           alignSpotlightToPin(activePin);
           contentModal.classList.add('active');
-          e.currentTarget.classList.add('viewed');
-          viewedMap.add(id);
         }
       });
     });
 
-    // 4. CLOSE DIALOG - TRIGGER SWIVEL AND CLEAR SPOTLIGHT IMAGE
+    // 4. CLOSE DIALOG: Swivel pin, mark viewed, and turn off highlights
     document.getElementById('close-dialog-btn').addEventListener('click', () => {
       if (activePin) {
         const pinBtn = activePin;
+        const id = pinBtn.dataset.id;
         const pinImg = pinBtn.querySelector('.pin-img');
         
         pinBtn.classList.add('swiveling');
@@ -1099,6 +1248,19 @@
 
         setTimeout(() => {
           pinBtn.classList.remove('swiveling');
+          pinBtn.classList.add('viewed');
+          viewedMap.add(id);
+
+          const hlEl = document.getElementById('hl-' + id);
+          if (hlEl) hlEl.classList.remove('active');
+          if (id === 'indiachina') {
+            const icLeader = document.getElementById('leader-indiachina');
+            if (icLeader) icLeader.classList.remove('active');
+          }
+
+          if (viewedMap.size === 7) {
+            setTimeout(() => completionModal.classList.add('active'), 300);
+          }
         }, 600);
       }
 
@@ -1107,26 +1269,27 @@
       setTimeout(() => {
         spotlightMapBg.src = '';
       }, 300);
-
-      if (viewedMap.size === 7) {
-        setTimeout(() => completionModal.classList.add('active'), 600);
-      }
     });
 
     // 5. HEADER & COMPLETION CONTROLS
     document.getElementById('btn-biblio').addEventListener('click', () => biblioOverlay.classList.add('active'));
     document.getElementById('close-biblio-btn').addEventListener('click', () => biblioOverlay.classList.remove('active'));
     
-    document.getElementById('close-completion-btn').addEventListener('click', () => {
-      completionModal.classList.remove('active');
-    });
+    // Top-right X button on the completion card returns to the cover page
+    document.getElementById('close-completion-btn').addEventListener('click', returnToHomeScreen);
 
     document.getElementById('completion-biblio-btn').addEventListener('click', () => {
       completionModal.classList.remove('active');
       biblioOverlay.classList.add('active');
     });
 
+    // HOME BUTTON CLICK: Reset map, unroll from the beginning, and show intro modal
     document.getElementById('btn-reset').addEventListener('click', () => {
+      contentModal.classList.remove('active');
+      completionModal.classList.remove('active');
+      biblioOverlay.classList.remove('active');
+      introModal.classList.remove('active');
+
       viewedMap.clear();
       document.querySelectorAll('.pin-btn').forEach(p => {
         p.classList.remove('viewed');
@@ -1137,15 +1300,19 @@
           pinImg.src = 'Resources/PastedVector-25.svg';
         }
       });
-      completionModal.classList.remove('active');
-      coverView.classList.remove('hidden');
+
+      runUnrollAnimation();
+
+      const pins = document.querySelectorAll('.pin-btn');
+      const unrollDelay = 1400;
+      setTimeout(() => {
+        introModal.classList.add('active');
+      }, unrollDelay + pins.length * 120 + 300);
     });
 
-    document.getElementById('btn-exit').addEventListener('click', () => {
-      if (confirm('You are about to close this tab. Do you want to continue?')) {
-        window.close();
-      }
-    });
+    // EXIT BUTTONS CLICK: Return to the cover home screen
+    document.getElementById('btn-exit').addEventListener('click', returnToHomeScreen);
+    document.getElementById('completion-exit-btn').addEventListener('click', returnToHomeScreen);
 
     // 6. HOVER HIGHLIGHTS & LEADER LINE
     (function () {
@@ -1173,7 +1340,6 @@
         pin.addEventListener('focus', on);
         pin.addEventListener('mouseleave', off);
         pin.addEventListener('blur', off);
-        pin.addEventListener('click', off);
       });
 
       document.getElementById('btn-reset').addEventListener('click', () => {
