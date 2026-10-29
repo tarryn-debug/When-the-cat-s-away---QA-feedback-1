@@ -20,6 +20,7 @@
       --color-bg-light: #EBEDFA;
       --color-text-dark: #111111;
       --font-main: 'Noto Sans', sans-serif;
+      --ink: #0E0C0C;
     }
 
     *, *::before, *::after {
@@ -617,7 +618,7 @@
     }
 
     /* ========================================================= */
-    /* BIBLIOGRAPHY MODAL (EQUAL MARGINS ON ALL 4 SIDES)         */
+    /* BIBLIOGRAPHY MODAL                                        */
     /* ========================================================= */
     .biblio-overlay {
       position: absolute;
@@ -645,39 +646,41 @@
       height: 100%;
       max-width: none;
       max-height: none;
-      padding: 1.75rem 2.5rem 1.75rem;
       display: flex;
       flex-direction: column;
       position: relative;
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      overflow: hidden;
     }
 
-    .biblio-card h2 {
-      font-size: 1.45rem;
-      font-weight: 700;
-      color: var(--color-text-dark);
-      margin-bottom: 0.75rem;
-      padding-bottom: 0.75rem;
+    .bib-head {
+      padding: 24px 24px 0;
       border-bottom: 1px solid #eaeaea;
     }
 
-    .biblio-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.9rem;
+    .bib-head h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--ink);
+      margin: 0 0 16px;
+      padding: 0;
+    }
+
+    .bib-body {
+      padding: 18px 24px;
       overflow-y: auto;
-      padding-right: 0.75rem;
-      padding-top: 0;
+      font-size: 15px;
+      line-height: 1.72;
+      color: var(--ink);
+      font-weight: 400;
       flex: 1;
     }
 
-    .biblio-card p {
-      font-size: 0.86rem;
-      line-height: 1.45;
-      color: #333333;
-      text-indent: -1.5rem;
-      padding-left: 1.5rem;
-      margin: 0;
+    .bib-entry {
+      margin: 0 0 14px;
+      padding: 0 0 0 24px;
+      text-indent: -24px;
+      border: 0;
       word-break: normal;
       overflow-wrap: break-word;
     }
@@ -695,8 +698,8 @@
       .spotlight-view-container.layout-left.card-wide .dialog-card,
       .spotlight-view-container.layout-left.card-wider .dialog-card { width: 90%; }
       .biblio-overlay { padding: 1rem; }
-      .biblio-card { padding: 1.25rem; }
-      .biblio-list { gap: 0.75rem; padding-right: 0.5rem; }
+      .bib-head { padding: 16px 16px 0; }
+      .bib-body { padding: 14px 16px; }
     }
   </style>
 </head>
@@ -850,18 +853,20 @@
     <div class="biblio-overlay" id="biblio-overlay">
       <div class="biblio-card">
         <button class="close-card-btn" id="close-biblio-btn" aria-label="Close Bibliography">&times;</button>
-        <h2>Bibliography</h2>
-        <div class="biblio-list">
-          <p>Council on Foreign Relations. n.d. <i>Conflict in Ukraine.</i> Available: https://www.cfr.org/global-conflict-tracker/conflict/conflict-ukraine [2021, February 23].</p>
-          <p>Council on Foreign Relations. n.d. <i>Conflict in Yemen.</i> Available: https://www.cfr.org/global-conflict-tracker/conflict/war-yemen [2021, February 23].</p>
-          <p>Falk, T.O. 2020. What the US troop withdrawal means for Iraq. <i>Aljazeera.</i> 22 November. Available: https://www.aljazeera.com/news/2020/11/22/what-the-us-troop-withdrawal-means-for-iraq [2021, February 23].</p>
-          <p>Fisher, M. 2014. Everything you need to know about the Ukraine crisis. 2014. <i>Vox.</i> 3 September. Available: https://www.vox.com/2014/9/3/18088560/ukraine-everything-you-need-to-know [2021, February 23].</p>
-          <p>Gilani, I. 2020. Timeline - Clashes, Standoffs between Chinese and Indian armies. <i>Anadolu Agency.</i> 16 June. Available: https://www.aa.com.tr/en/asia-pacific/timeline-clashes-standoffs-between-chinese-and-indian-armies/1879115# [2021, February 23].</p>
-          <p>History. 2020. <i>5-day long Russo-Georgian War begins.</i> Available: https://www.history.com/this-day-in-history/5-day-long-russo-georgian-war-begins [2021, February 23].</p>
-          <p>Martinez, L. 2019. Why the US Navy sails past disputed artificial islands claimed by China. <i>ABC News.</i> 6 May. Available: https://abcnews.go.com/Politics/us-navy-sails-past-disputed-artificial-islands-claimed/story?id=60993256#:~:text=In%202014%20China%20began%20massive,deployment%20of%20Chinese%20fighter%20jets [2021, February 23].</p>
-          <p>Rhodes, B. 2018. Inside the White House during the Syrian 'red line' crisis. <i>The Atlantic.</i> 3 June. Available: https://www.theatlantic.com/international/archive/2018/06/inside-the-white-house-during-the-syrian-red-line-crisis/561887/ [2021, February 23].</p>
-          <p>Turkey launches ground offensive in northern Syria. 2019. <i>BBC.</i> 9 October. Available: https://www.bbc.com/news/world-middle-east-49983357 [2021, February 23].</p>
-          <p>United Nations International Children's Emergency Fund. n.d <i>Yemen Crisis.</i> Available: https://www.unicef.org/emergencies/yemen-crisis [2021, February 23].</p>
+        <div class="bib-head">
+          <h2>Bibliography</h2>
+        </div>
+        <div class="bib-body">
+          <p class="bib-entry">Council on Foreign Relations. n.d. <i>Conflict in Ukraine.</i> Available: https://www.cfr.org/global-conflict-tracker/conflict/conflict-ukraine [2021, February 23].</p>
+          <p class="bib-entry">Council on Foreign Relations. n.d. <i>Conflict in Yemen.</i> Available: https://www.cfr.org/global-conflict-tracker/conflict/war-yemen [2021, February 23].</p>
+          <p class="bib-entry">Falk, T.O. 2020. What the US troop withdrawal means for Iraq. <i>Aljazeera.</i> 22 November. Available: https://www.aljazeera.com/news/2020/11/22/what-the-us-troop-withdrawal-means-for-iraq [2021, February 23].</p>
+          <p class="bib-entry">Fisher, M. 2014. Everything you need to know about the Ukraine crisis. 2014. <i>Vox.</i> 3 September. Available: https://www.vox.com/2014/9/3/18088560/ukraine-everything-you-need-to-know [2021, February 23].</p>
+          <p class="bib-entry">Gilani, I. 2020. Timeline - Clashes, Standoffs between Chinese and Indian armies. <i>Anadolu Agency.</i> 16 June. Available: https://www.aa.com.tr/en/asia-pacific/timeline-clashes-standoffs-between-chinese-and-indian-armies/1879115# [2021, February 23].</p>
+          <p class="bib-entry">History. 2020. <i>5-day long Russo-Georgian War begins.</i> Available: https://www.history.com/this-day-in-history/5-day-long-russo-georgian-war-begins [2021, February 23].</p>
+          <p class="bib-entry">Martinez, L. 2019. Why the US Navy sails past disputed artificial islands claimed by China. <i>ABC News.</i> 6 May. Available: https://abcnews.go.com/Politics/us-navy-sails-past-disputed-artificial-islands-claimed/story?id=60993256#:~:text=In%202014%20China%20began%20massive,deployment%20of%20Chinese%20fighter%20jets [2021, February 23].</p>
+          <p class="bib-entry">Rhodes, B. 2018. Inside the White House during the Syrian 'red line' crisis. <i>The Atlantic.</i> 3 June. Available: https://www.theatlantic.com/international/archive/2018/06/inside-the-white-house-during-the-syrian-red-line-crisis/561887/ [2021, February 23].</p>
+          <p class="bib-entry">Turkey launches ground offensive in northern Syria. 2019. <i>BBC.</i> 9 October. Available: https://www.bbc.com/news/world-middle-east-49983357 [2021, February 23].</p>
+          <p class="bib-entry">United Nations International Children's Emergency Fund. n.d <i>Yemen Crisis.</i> Available: https://www.unicef.org/emergencies/yemen-crisis [2021, February 23].</p>
         </div>
       </div>
     </div>
