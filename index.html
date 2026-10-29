@@ -628,7 +628,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 3rem;
+      padding: 1.5rem;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.3s ease;
@@ -642,19 +642,16 @@
     .biblio-card {
       background: #ffffff;
       border-radius: 0;
-      width: 100%;
-      height: 100%;
-      max-width: none;
-      max-height: none;
+      width: 78%;
+      max-height: 80%;
+      padding: 1.75rem 2.5rem 1.75rem;
       display: flex;
       flex-direction: column;
       position: relative;
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      overflow: hidden;
     }
 
     .bib-head {
-      padding: 24px 24px 0;
       border-bottom: 1px solid #eaeaea;
     }
 
@@ -697,8 +694,7 @@
       .spotlight-view-container.layout-left .dialog-card { width: 90%; left: 5%; }
       .spotlight-view-container.layout-left.card-wide .dialog-card,
       .spotlight-view-container.layout-left.card-wider .dialog-card { width: 90%; }
-      .biblio-overlay { padding: 1rem; }
-      .bib-head { padding: 16px 16px 0; }
+      .biblio-card { width: 95%; max-height: 85%; padding: 1.25rem; }
       .bib-body { padding: 14px 16px; }
     }
   </style>
