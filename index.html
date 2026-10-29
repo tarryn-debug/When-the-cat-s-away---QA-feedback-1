@@ -203,13 +203,30 @@
       background-color: #ffffff;
       overflow: hidden;
       perspective: 800px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* MAP FRAME LOCK - Enforces exact 1112.8 / 498.4 map coordinate aspect ratio */
+    .map-frame-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      max-width: calc(100% * 1);
+      aspect-ratio: 1112.8 / 498.4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .world-map-svg {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       display: block;
-      object-fit: contain;
+      object-fit: fill;
     }
 
     .map-highlights {
@@ -300,6 +317,7 @@
       100% { transform: rotateY(180deg) scale(1); }
     }
 
+    /* ACCURATE MAP PERCENTAGE POSITIONS LOCKED TO 1112.8 x 498.4 */
     .pin-ukraine    { top: 25.6%; left: 55.3%; }
     .pin-turkey     { top: 32.4%; left: 56.5%; }
     .pin-georgia    { top: 30.1%; left: 59.0%; }
@@ -487,13 +505,11 @@
       transition: none !important;
     }
 
-    /* Wider card for India-China & Yemen */
     .spotlight-view-container.layout-left.card-wide .dialog-card {
       width: 45%;
       bottom: 16%;
     }
 
-    /* Widest card for South China Sea */
     .spotlight-view-container.layout-left.card-wider .dialog-card {
       width: 52.5%;
       bottom: 12%;
@@ -533,7 +549,7 @@
       transform-origin: 50.7% 51.7%;
     }
 
-    /* CENTER MODAL (WIDENED FOR 3-LINE TEXT) */
+    /* CENTER MODAL */
     .center-modal {
       background: #ffffff;
       border-radius: 0;
@@ -585,7 +601,7 @@
       transform: translateY(-1px);
     }
 
-    /* COMPLETION MODAL CUSTOM STYLES */
+    /* COMPLETION MODAL */
     .completion-card {
       max-width: 580px;
       padding: 2.75rem 3rem 2.25rem;
@@ -704,7 +720,7 @@
 
   <div class="interactive-container" id="interactive-app">
 
-    <!-- COVER SLIDE (IMAGE 1: PastedVector-39) -->
+    <!-- COVER SLIDE -->
     <section class="view-cover" id="cover-view">
       <div class="cover-content">
         <h1 class="cover-title">When the cat's away</h1>
@@ -739,51 +755,54 @@
     </header>
 
     <main class="stage-view">
-      <!-- BASE MAP -->
-      <img src="Resources/PastedVector-16.svg" id="main-world-map" alt="World Map" class="world-map-svg">
+      <!-- MAP FRAME INNER: Maintains 1112.8 / 498.4 ratio identically across map, overlays, and pins -->
+      <div class="map-frame-inner" id="map-frame-inner">
+        <!-- BASE MAP -->
+        <img src="Resources/PastedVector-16.svg" id="main-world-map" alt="World Map" class="world-map-svg">
 
-      <!-- HOVER HIGHLIGHTS -->
-      <svg class="map-highlights" viewBox="0 0 1112.8 498.4" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-        <defs>
-          <filter id="tint-southchina" color-interpolation-filters="sRGB">
-            <feFlood flood-color="#475ED1" result="c"/>
-            <feComposite in="c" in2="SourceAlpha" operator="in"/>
-          </filter>
-        </defs>
-        <image id="hl-ukraine"    class="map-hl" href="Resources/PastedVector-18.svg" x="589.3" y="96.7"  width="52.1" height="29.2"/>
-        <image id="hl-turkey"     class="map-hl" href="Resources/PastedVector-19.svg" x="603.3" y="134.3" width="60.2" height="23.6"/>
-        <image id="hl-syria"      class="map-hl" href="Resources/PastedVector-20.svg" x="634.5" y="153"   width="20"   height="19"/>
-        <image id="hl-georgia"    class="map-hl" href="Resources/PastedVector-21.svg" x="651"   y="133.5" width="22.1" height="9.5"/>
-        <image id="hl-yemen"      class="map-hl" href="Resources/PastedVector-22.svg" x="664.5" y="219.8" width="34.1" height="24.2"/>
-        <image id="hl-indiachina" class="map-hl" href="Resources/PastedVector-23.svg" x="769"   y="155.6" width="15.5" height="20.4"/>
-        <image id="hl-southchina" class="map-hl" href="Resources/PastedVector-28.svg" x="875.8" y="189"   width="54.6" height="84.1" filter="url(#tint-southchina)"/>
-        
-        <!-- PastedVector-27 Leader Line for India-China -->
-        <image id="leader-indiachina" class="map-leader" href="Resources/PastedVector-27.svg" x="773.8" y="156.8" width="4.7" height="7.2"/>
-      </svg>
+        <!-- HOVER HIGHLIGHTS -->
+        <svg class="map-highlights" viewBox="0 0 1112.8 498.4" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <filter id="tint-southchina" color-interpolation-filters="sRGB">
+              <feFlood flood-color="#475ED1" result="c"/>
+              <feComposite in="c" in2="SourceAlpha" operator="in"/>
+            </filter>
+          </defs>
+          <image id="hl-ukraine"    class="map-hl" href="Resources/PastedVector-18.svg" x="589.3" y="96.7"  width="52.1" height="29.2"/>
+          <image id="hl-turkey"     class="map-hl" href="Resources/PastedVector-19.svg" x="603.3" y="134.3" width="60.2" height="23.6"/>
+          <image id="hl-syria"      class="map-hl" href="Resources/PastedVector-20.svg" x="634.5" y="153"   width="20"   height="19"/>
+          <image id="hl-georgia"    class="map-hl" href="Resources/PastedVector-21.svg" x="651"   y="133.5" width="22.1" height="9.5"/>
+          <image id="hl-yemen"      class="map-hl" href="Resources/PastedVector-22.svg" x="664.5" y="219.8" width="34.1" height="24.2"/>
+          <image id="hl-indiachina" class="map-hl" href="Resources/PastedVector-23.svg" x="769"   y="155.6" width="15.5" height="20.4"/>
+          <image id="hl-southchina" class="map-hl" href="Resources/PastedVector-28.svg" x="875.8" y="189"   width="54.6" height="84.1" filter="url(#tint-southchina)"/>
+          
+          <!-- Leader Line for India-China -->
+          <image id="leader-indiachina" class="map-leader" href="Resources/PastedVector-27.svg" x="773.8" y="156.8" width="4.7" height="7.2"/>
+        </svg>
 
-      <!-- Map Pins -->
-      <button class="pin-btn pin-ukraine" data-id="ukraine" aria-label="Ukraine Conflict">
-        <img src="Resources/PastedVector-25.svg" alt="Pin" class="pin-img">
-      </button>
-      <button class="pin-btn pin-turkey" data-id="turkey" aria-label="Turkey Intervention">
-        <img src="Resources/PastedVector-25.svg" alt="Pin" class="pin-img">
-      </button>
-      <button class="pin-btn pin-syria" data-id="syria" aria-label="Syria Red Line">
-        <img src="Resources/PastedVector-25.svg" alt="Pin" class="pin-img">
-      </button>
-      <button class="pin-btn pin-georgia" data-id="georgia" aria-label="Georgia War">
-        <img src="Resources/PastedVector-25.svg" alt="Pin" class="pin-img">
-      </button>
-      <button class="pin-btn pin-yemen" data-id="yemen" aria-label="Yemen Crisis">
-        <img src="Resources/PastedVector-25.svg" alt="Pin" class="pin-img">
-      </button>
-      <button class="pin-btn pin-indiachina" data-id="indiachina" aria-label="India-China Conflict">
-        <img src="Resources/PastedVector-25.svg" alt="Pin" class="pin-img">
-      </button>
-      <button class="pin-btn pin-southchina" data-id="southchina" aria-label="South China Sea">
-        <img src="Resources/PastedVector-25.svg" alt="Pin" class="pin-img">
-      </button>
+        <!-- Map Pins -->
+        <button class="pin-btn pin-ukraine" data-id="ukraine" aria-label="Ukraine Conflict">
+          <img src="Resources/PastedVector-25.svg" alt="Pin" class="pin-img">
+        </button>
+        <button class="pin-btn pin-turkey" data-id="turkey" aria-label="Turkey Intervention">
+          <img src="Resources/PastedVector-25.svg" alt="Pin" class="pin-img">
+        </button>
+        <button class="pin-btn pin-syria" data-id="syria" aria-label="Syria Red Line">
+          <img src="Resources/PastedVector-25.svg" alt="Pin" class="pin-img">
+        </button>
+        <button class="pin-btn pin-georgia" data-id="georgia" aria-label="Georgia War">
+          <img src="Resources/PastedVector-25.svg" alt="Pin" class="pin-img">
+        </button>
+        <button class="pin-btn pin-yemen" data-id="yemen" aria-label="Yemen Crisis">
+          <img src="Resources/PastedVector-25.svg" alt="Pin" class="pin-img">
+        </button>
+        <button class="pin-btn pin-indiachina" data-id="indiachina" aria-label="India-China Conflict">
+          <img src="Resources/PastedVector-25.svg" alt="Pin" class="pin-img">
+        </button>
+        <button class="pin-btn pin-southchina" data-id="southchina" aria-label="South China Sea">
+          <img src="Resources/PastedVector-25.svg" alt="Pin" class="pin-img">
+        </button>
+      </div>
     </main>
 
     <!-- INTRO OVERLAY MODAL -->
@@ -948,26 +967,32 @@
       return [a - o, a + o].map(t => [px + l * Math.cos(t), py + l * Math.sin(t)]);
     }
 
+    // Precise sub-pixel pin tip measurement relative to app container
+    function getPinTipCoordinates(pin, app) {
+      const pinImg = pin.querySelector('.pin-img');
+      const appRect = app.getBoundingClientRect();
+      const pinImgRect = pinImg.getBoundingClientRect();
+      return {
+        x: (pinImgRect.left + pinImgRect.width / 2) - appRect.left,
+        y: pinImgRect.bottom - appRect.top
+      };
+    }
+
     // Left-aligned regions layout: card bottom-left, diagonal wedge connecting to the circle
     function alignLeftLayout(pin) {
       const app = document.getElementById('interactive-app');
-      const stage = document.querySelector('.stage-view');
       const stack = document.getElementById('spotlight-stack');
       const circle = document.getElementById('spotlight-circle');
       const card = document.querySelector('.dialog-card');
-      const pinImg = pin.querySelector('.pin-img');
       const wedge = document.getElementById('spotlight-wedge');
       const poly = document.getElementById('spotlight-wedge-poly');
 
       stack.style.transform = '';
 
-      // Align circle's pin directly over map pin
-      const gap = pin.offsetHeight - pinImg.offsetHeight;
-      const tipX = stage.offsetLeft + pin.offsetLeft;
-      const tipY = stage.offsetTop + pin.offsetTop - gap;
+      const tip = getPinTipCoordinates(pin, app);
       const size = circle.clientWidth;
-      const cx = tipX - (0.508 - 0.5) * size;
-      const cy = tipY - (0.531 - 0.5) * size;
+      const cx = tip.x - (0.508 - 0.5) * size;
+      const cy = tip.y - (0.531 - 0.5) * size;
       circle.style.setProperty('--cx', cx + 'px');
       circle.style.setProperty('--cy', cy + 'px');
 
@@ -989,15 +1014,12 @@
       if (cardAboveCircle) {
         p1 = [card.offsetLeft + card.offsetWidth, card.offsetTop];
         if (spotlightContainer.classList.contains('wedge-outer')) {
-          // Yemen: wedge wraps the circle, touching its outer (right-hand) tangent
           t1 = tangentPoints(p1[0], p1[1], cx, cy, r).sort((a, b) => b[0] - a[0])[0];
         } else {
-          // Syria: wedge runs into the near side of the circle
           const vx = cx - p1[0], vy = cy - p1[1], vd = Math.hypot(vx, vy);
           t1 = [cx - vx / vd * r, cy - vy / vd * r];
         }
       } else {
-        // Turkey, Georgia, India-China: wedge leaves the card's top-left corner and touches the circle's upper tangent
         p1 = [card.offsetLeft, card.offsetTop];
         t1 = tangentPoints(p1[0], p1[1], cx, cy, r).sort((a, b) => a[1] - b[1])[0];
       }
@@ -1014,24 +1036,19 @@
         return;
       }
 
-      const stage = document.querySelector('.stage-view');
+      const app = document.getElementById('interactive-app');
       const stack = document.getElementById('spotlight-stack');
       const circle = document.getElementById('spotlight-circle');
       const card = document.querySelector('.dialog-card');
-      const pinImg = pin.querySelector('.pin-img');
 
       card.style.top = '';
       card.style.bottom = '';
       stack.style.transform = '';
 
-      // Direct coordinates relative to the interactive container
-      const gap = pin.offsetHeight - pinImg.offsetHeight;
-      const tipX = stage.offsetLeft + pin.offsetLeft;
-      const tipY = stage.offsetTop + pin.offsetTop - gap;
-
+      const tip = getPinTipCoordinates(pin, app);
       const size = circle.offsetWidth || 132;
-      const cx = tipX - (0.508 - 0.5) * size;
-      const cy = tipY - (0.531 - 0.5) * size;
+      const cx = tip.x - (0.508 - 0.5) * size;
+      const cy = tip.y - (0.531 - 0.5) * size;
 
       circle.style.setProperty('--cx', cx + 'px');
       circle.style.setProperty('--cy', cy + 'px');
